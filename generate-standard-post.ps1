@@ -57,8 +57,7 @@ if ($res -ne "null" -and $res -ne $null) {
       $normalisedRes = $res.content -replace "\<.+?\>"
       # Only interested in full sentences, but isn't always guaranteed
       $descList = ([regex]".+?[\.\!\?]").Matches($normalisedRes)
-      $randomIndex = Get-Random -Minimum 0 -Maximum @($descList).length
-      $desc = $descList[$randomIndex].Value.trim()
+      $desc = (Get-Random -InputObject @($descList)).Value.trim()
    }
    # Double space replacement is mainly to handle the case when $mentions is empty
    Write-Host ("""${desc}"" ${mentions} ${hashtags}`r`n${site}" -replace "  ", " ") -ForegroundColor Black -BackgroundColor Cyan
