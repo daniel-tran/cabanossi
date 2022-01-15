@@ -38,4 +38,4 @@ param(
 # https://devblogs.microsoft.com/scripting/use-powershell-to-pick-random-winning-users-from-text/
 $comment = Get-Content $commentsFile | sort{Get-Random} | select -First 1
 # Double space replacement is mainly to handle the case when $mentions is empty
-"${comment} ${mentions} ${hashtags}" -replace "  ", " "
+Write-Host ("${comment} ${mentions} ${hashtags}" -replace "  ", " ") -ForegroundColor Black -BackgroundColor Cyan

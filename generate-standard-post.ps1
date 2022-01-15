@@ -61,7 +61,7 @@ if ($res -ne "null" -and $res -ne $null) {
       $desc = $descList[$randomIndex].Value.trim()
    }
    # Double space replacement is mainly to handle the case when $mentions is empty
-   """${desc}"" ${mentions} ${hashtags}`r`n${site}" -replace "  ", " "
+   Write-Host ("""${desc}"" ${mentions} ${hashtags}`r`n${site}" -replace "  ", " ") -ForegroundColor Black -BackgroundColor Cyan
 } else {
    "ERROR!"
    $res.message
