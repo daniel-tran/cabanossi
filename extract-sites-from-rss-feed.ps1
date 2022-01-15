@@ -25,7 +25,7 @@
 .EXAMPLE
     .\extract-sites-from-rss-feed.ps1 -rssFeed "https://www.technologyreview.com/feed/"
 .EXAMPLE
-    .\extract-sites-from-rss-feed.ps1 -appendWorkingSet:false -rssFeed "https://www.technologyreview.com/feed/"
+    .\extract-sites-from-rss-feed.ps1 -appendWorkingSet:$False -rssFeed "https://www.technologyreview.com/feed/"
 .EXAMPLE
     .\extract-sites-from-rss-feed.ps1 -clearWorkingSet -rssFeed "https://www.technologyreview.com/feed/"
 .NOTES
