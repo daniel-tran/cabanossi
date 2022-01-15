@@ -21,19 +21,27 @@
 .PARAMETER workingSetFile
     The file to extract the site from, taking only the first line. Overrides the $site parameter, unless the file doesn't exist.
     Defaults to the empty string.
+.PARAMETER mentions
+    The mentions used to refer to specific entities like people or companies. Defaults to the empty string.
+.PARAMETER hashtags
+    The hashtags used to tag the post with categories. Defaults to the empty string.
 .EXAMPLE
     .\generate-standard-post.ps1 -site https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTP-server/
 .EXAMPLE
     .\generate-standard-post.ps1 -workingSetFile .\SITES.txt
 .EXAMPLE
     .\generate-standard-post.ps1 -extractFromDescription -site https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTP-server/
+.EXAMPLE
+    .\generate-standard-post.ps1 -site https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTP-server/ -mentions "@Macrohard" -hashtags "#technology #food"
 .NOTES
     Currently only tested on LinkedIn.
 #>
 param(
    [string]$site = "",
    [switch]$extractFromDescription = $false,
-   [string]$workingSetFile = ""
+   [string]$workingSetFile = "",
+   [string]$mentions = "",
+   [string]$hashtags = ""
 )
 
 if ($workingSetFile -ne "" -and (Test-Path $workingSetFile)) {
@@ -52,7 +60,8 @@ if ($res -ne "null" -and $res -ne $null) {
       $randomIndex = Get-Random -Minimum 0 -Maximum @($descList).length
       $desc = $descList[$randomIndex].Value.trim()
    }
-   """${desc}"" @Macrohard #technology`r`n${site}"
+   # Double space replacement is mainly to handle the case when $mentions is empty
+   """${desc}"" ${mentions} ${hashtags}`r`n${site}" -replace "  ", " "
 } else {
    "ERROR!"
    $res.message
