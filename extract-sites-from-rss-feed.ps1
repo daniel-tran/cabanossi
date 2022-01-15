@@ -76,19 +76,19 @@ if (Test-Path $rssCacheFileName) {
     }) | Sort-Object -Descending | Get-Unique
     
     if ($rssCache -ne $null -And $sitesAll -ne $null) {
-        "**** NEW WORKING SET ITEMS ****"
+        Write-Host "**** NEW WORKING SET ITEMS ****" -ForegroundColor Blue -BackgroundColor White
         # Handle any new working set links in the RSS feeds, ignoring anything which the cache has but the RSS feed doesn't
         ForEach ($rssWorkingSetItem in Compare-Object $rssCache $sitesAll | Where-Object SideIndicator -eq "=>") {
-            $rssWorkingSetItem.InputObject
+            Write-Host $rssWorkingSetItem.InputObject -ForegroundColor DarkGreen -BackgroundColor White
             
             # Persist any new working set links for external use
             if ($appendWorkingSet) {
                 Add-Content -Path $rssWorkingSetFileName -Value $rssWorkingSetItem.InputObject
             }
         }
-        "*******************************"
+        Write-Host "*******************************" -ForegroundColor Blue -BackgroundColor White
     } else {
-        "**** NO ITEMS IN RSS FEED OR CACHE IS EMPTY ****"
+        Write-Host "**** NO ITEMS IN RSS FEED OR CACHE IS EMPTY ****" -ForegroundColor Red -BackgroundColor White
     }
 } else {
     # If the cache doesn't exist, then all the links are new and therefore part of the working set
@@ -97,9 +97,9 @@ if (Test-Path $rssCacheFileName) {
 }
 
 Out-File -FilePath $rssCacheFileName -InputObject $sitesAll
-@"
+Write-Host @"
 Completed cache update with the latest RSS feed results. You can check these in the following files:
 
 Cache file: ${rssCacheFileName}
 Working set: ${rssWorkingSetFileName}
-"@
+"@ -ForegroundColor Black -BackgroundColor White
