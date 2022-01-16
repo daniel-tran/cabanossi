@@ -38,6 +38,7 @@ param(
    [switch]$appendWorkingSet = $true,
    [switch]$clearWorkingSet = $false
 )
+$ErrorActionPreference = "Stop"
 
 # Normally, an RSS feed URL would be a subdirectory of the base website and would have a forward
 # slash included. Manually suffix a forward slash in the unlikely situation that this is not the case.

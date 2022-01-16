@@ -43,6 +43,7 @@ param(
    [string]$mentions = "",
    [string]$hashtags = ""
 )
+$ErrorActionPreference = "Stop"
 
 if ($workingSetFile -ne "" -and (Test-Path $workingSetFile)) {
    $site = Get-Content $workingSetFile -First 1;
@@ -62,6 +63,5 @@ if ($res -ne "null" -and $res -ne $null) {
    # Double space replacement is mainly to handle the case when $mentions is empty
    Write-Host ("""${desc}"" ${mentions} ${hashtags}`r`n${site}" -replace "  ", " ") -ForegroundColor Black -BackgroundColor Cyan
 } else {
-   "ERROR!"
-   $res.message
+   Write-Host "Error: Could not extract text quote from ${site}" -ForegroundColor Red
 }
