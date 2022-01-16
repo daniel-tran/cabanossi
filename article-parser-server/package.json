@@ -9,6 +9,7 @@
   "author": "Yes",
   "license": "MIT",
   "dependencies": {
-    "article-parser": "^5.0.2"
+    "article-parser": "^5.0.2",
+    "feed-reader": "^5.0.0-rc2"
   }
 }

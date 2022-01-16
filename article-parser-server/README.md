@@ -39,9 +39,35 @@ Specify a target URL to parse using the `url` parameter. Its protocol must be ei
 }
 ```
 
+## Valid RSS feed
+
+To process a URL of an RSS feed, simply include the `isRssFeed` parameter and assign it any non-empty value.
+
+### Example request
+
+`curl http://localhost:277/?url=https://stackoverflow.com/feeds&isRssFeed=true`
+
+### Example response
+
+```
+{
+  title: 'Recent Questions - Stack Overflow',
+  link: 'https://stackoverflow.com/feeds',
+  description: 'most recent 30 from stackoverflow.com',
+  generator: '',
+  language: '',
+  published: '2022-01-16T03:55:00.000Z',
+  entries: [
+    {
+    ...
+    }
+  ]
+}
+```
+
 ## Valid URL with abnormal page layout
 
-Some pages may use a layout which is incompatible with the article-parser library, such as RSS feeds or URL's that don't exist. These register as an invalid URL in the server console output.
+Some pages may use a layout which is incompatible with the article-parser library, such as RSS feeds (without the `isRssFeed` flag) or URL's that don't exist. These register as an invalid URL in the server console output.
 
 ### Example request
 
@@ -69,4 +95,18 @@ null
 
 ```
 ERROR: Input must be a valid URL
+```
+
+## Invalid RSS feed
+
+You will get an error when attempting to process a regular web page as an RSS feed.
+
+### Example request
+
+`curl http://localhost:277/?url=https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTP-server/&isRssFeed=true`
+
+### Example response
+
+```
+ERROR: Could not fetch XML content from "https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTP-server/"
 ```

@@ -46,14 +46,9 @@ if ($rssFeed.EndsWith("/") -eq $false) {
 }
 
 $targetSite = [Regex]::Match($rssFeed, "https?:\/\/(.+?)\/").Groups[1].Value
-# Since the URL contains some special regex characters, they need to be escaped
-$targetSiteRegex = $targetSite.Replace("\.", "\.").Replace("\/", "\/")
-
-$rssFeedDetails = Invoke-WebRequest $rssFeed
-$siteList = ([regex]"href=""(https?:\/\/${targetSiteRegex}.*?)""").Matches($rssFeedDetails.Content)
-
-$sitesAll = $(Foreach ($siteDetails in $siteList) {
-    $site = $siteDetails.Groups[1].Value
+$rssFeedDetails = Invoke-RestMethod -Uri "http://localhost:277?isRssFeed=true&url=${rssFeed}"
+$sitesAll = $(Foreach ($siteDetails in $rssFeedDetails.entries) {
+    $site = $siteDetails.link
     # Ignore links that point to the primary homepage or the RSS feed site
     if ($site.EndsWith($targetSite) -eq $false -And $site -ne $rssFeed) {
         $site
