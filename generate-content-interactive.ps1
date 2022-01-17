@@ -85,7 +85,14 @@ Enter next action
 
     } elseif ($action -ieq $keyDelete) {
         if ($workingSetFile -ne "") {
-            (Get-Content $workingSetFile | Select-Object -Skip 1) | Set-Content $workingSetFile;
+            $fileContents = Get-Content $workingSetFile
+            # If the file only has one line of actual data, PowerShell will read it as an array of characters instead of
+            # an array containing a single string. Thus, different processing occurs to account for this behaviour.
+            if (($fileContents | Measure-Object).Count -gt 1) {
+                ($fileContents | Select-Object -Skip 1) | Set-Content $workingSetFile
+            } else {
+                Set-Content $workingSetFile -Value $null
+            }
             Write-Host "Removed top-most entry in ${workingSetFile}" -ForegroundColor Cyan
         } else {
             Write-Host "Error: A working set file has not been loaded yet!" -ForegroundColor Red
