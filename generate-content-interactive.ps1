@@ -36,6 +36,8 @@ $keyDelete = "d"
 $keyQuit = "q"
 $keyLoadFile = "l"
 $keyRefreshWorkingSet = "r"
+$keySetMentions = "m"
+$keySetHashtags = "h"
 $action = $keyRun
 
 $rssFeedsFile = "${PSScriptRoot}\data\rss-feeds.txt"
@@ -49,6 +51,8 @@ while ($action -ne $keyQuit) {
 
 Enter next action
   <enter> = generate standard post from "${workingSetFile}"
+  ${keySetMentions} = set mentions (current: "${mentions}")
+  ${keySetHashtags} = set hashtags (current: "${hashtags}")
   ${keyRunFromUrl} = generate standard post from user-provided URL
   ${keyComment} = generate standard comment
   ${keyRefreshWorkingSet} = refresh working set from RSS feed
@@ -63,6 +67,14 @@ Enter next action
         } else {
             Write-Host "Error: A working set file has not been loaded yet!" -ForegroundColor Red
         }
+
+    } elseif ($action -ieq $keySetMentions) {
+        $mentions = Read-Host "Enter the new mentions to include in generated comments and posts"
+        Write-Host "Success! Comments and posts generated will now include the following mentions: ${mentions}" -ForegroundColor Green
+
+    } elseif ($action -ieq $keySetHashtags) {
+        $hashtags = Read-Host "Enter the new hashtags to include in generated comments and posts"
+        Write-Host "Success! Comments and posts generated will now include the following hashtags: ${hashtags}" -ForegroundColor Green
 
     } elseif ($action -ieq $keyRunFromUrl) {
         $site = Read-Host "Enter a URL to extract a quote from"
