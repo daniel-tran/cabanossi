@@ -63,7 +63,7 @@ Example:
 .\extract-sites-from-rss-feed.ps1 -rssFeed https://www.technologyreview.com/feed/
 ```
 
-Example output (found under "\data\www.technologyreview.com\rss-feed-working-set.www.technologyreview.com.txt"):
+Example output (found under `\data\www.technologyreview.com\rss-feed-working-set.www.technologyreview.com.txt`):
 ```
 https://www.technologyreview.com/2022/01/13/1043591/scaling-with-low-code-to-accelerate-digital-transformation/
 https://www.technologyreview.com/2022/01/13/1043582/western-digitals-journey-to-build-business-resiliency-through-cloud-and-erp-transformations/
