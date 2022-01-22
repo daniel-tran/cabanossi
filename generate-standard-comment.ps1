@@ -33,6 +33,7 @@ param(
    [string]$mentions = "",
    [string]$hashtags = ""
 )
+$ErrorActionPreference = "Stop"
 
 # Random line selecting logic is based on this Microsoft post:
 # https://devblogs.microsoft.com/scripting/use-powershell-to-pick-random-winning-users-from-text/
