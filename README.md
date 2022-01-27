@@ -89,6 +89,12 @@ For more information about this script, run the folllowing command: `Get-Help -D
 
 ## FAQ
 
+### Q. Why is `generate-standard-post.ps1` so unreliable at providing proper sentences?
+
+At the moment, your mileage will vary based on the amount of text-based content on the provided article URL. The script is not particularly clever when it comes to extracting quoted text, relying on a regular expression rather than checking for proper sentence structure and the like.
+
+The workaround for this is just to keep running the script until you get a reasonable-looking sentence. Or just go and read the article manually which, as disappointing as it seems, is sometimes faster than continually running the script.
+
 ### Q. What are these concepts of "cache" and "working sets" referring to in `extract-sites-from-rss-feed.ps1`?
 
 In summary:
