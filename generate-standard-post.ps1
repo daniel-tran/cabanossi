@@ -55,7 +55,8 @@ if ($res -ne "null" -and $res -ne $null) {
    if ($extractFromDescription -eq $true) {
       $desc = [Regex]::Match( $res.description, "(.+[\.\!\?])").Value
    } else {
-      $normalisedRes = $res.content -replace "\<.+?\>"
+      # Curly quotes print weirdly in the console output, and includes some Unicode characters for some reason
+      $normalisedRes = $res.content -replace "\<.+?\>" -replace "[‘’][^\x00-\x7F]{0,2}", "'" -replace "[“”][^\x00-\x7F]{0,2}", '"'
       # Only interested in full sentences, but isn't always guaranteed
       $descList = ([regex]".+?[\.\!\?]").Matches($normalisedRes)
       $desc = (Get-Random -InputObject @($descList)).Value.trim()
