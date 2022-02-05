@@ -42,7 +42,8 @@ $ErrorActionPreference = "Stop"
 
 # Normally, an RSS feed URL would be a subdirectory of the base website and would have a forward
 # slash included. Manually suffix a forward slash in the unlikely situation that this is not the case.
-if ($rssFeed.EndsWith("/") -eq $false) {
+# But don't add it in if the RSS feed is being provided from an actual XML endpoint.
+if ($rssFeed.EndsWith("/") -eq $false -And $rssFeed.EndsWith(".xml") -eq $false) {
     $rssFeed = "${rssFeed}/"
 }
 
