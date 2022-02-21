@@ -49,7 +49,13 @@ if ($workingSetFile -ne "" -and (Test-Path $workingSetFile)) {
    $site = Get-Content $workingSetFile -First 1;
 }
 
-$res = Invoke-RestMethod -Uri "http://localhost:277?url=${site}"
+if ($site -ne $null -and $site.Trim() -ne "") {
+   $res = Invoke-RestMethod -Uri "http://localhost:277?url=${site}"
+} else {
+   Write-Host "Warning: ""${site}"" is empty or ""${workingSetFile}"" is an empty file, ignoring request to generate text" -ForegroundColor Yellow
+   $res = $null
+   $site = "<no site specified>"
+}
 
 if ($res -ne "null" -and $res -ne $null) {
    if ($extractFromDescription -eq $true) {
