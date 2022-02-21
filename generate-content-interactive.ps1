@@ -41,6 +41,7 @@ $keySetHashtags = "h"
 $action = $keyRun
 
 $rssFeedsFile = "${PSScriptRoot}\data\rss-feeds.txt"
+$siteCached = ""
 
 while ($action -ne $keyQuit) {
     if ($workingSetFile -eq "") {
@@ -53,7 +54,7 @@ Enter next action
   <enter> = generate standard post from "${workingSetFile}"
   ${keySetMentions} = set mentions (current: "${mentions}")
   ${keySetHashtags} = set hashtags (current: "${hashtags}")
-  ${keyRunFromUrl} = generate standard post from user-provided URL
+  ${keyRunFromUrl} = generate standard post from user-provided URL (default: "${siteCached}")
   ${keyComment} = generate standard comment
   ${keyRefreshWorkingSet} = refresh working set from RSS feed
   ${keyLoadFile} = load working set file
@@ -78,6 +79,14 @@ Enter next action
 
     } elseif ($action -ieq $keyRunFromUrl) {
         $site = Read-Host "Enter a URL to extract a quote from"
+        if ($site -ne "") {
+            $siteCached = $site
+        } elseif ($siteCached -ne "") {
+            $site = $siteCached
+        } else {
+            Write-Host "Warning! User-provided URL and cached URL are both empty. Ignoring request to extract quote from URL." -ForegroundColor Yellow
+            continue
+        }
         .\generate-standard-post.ps1 -site $site -mentions $mentions -hashtags $hashtags
 
     } elseif ($action -ieq $keyComment) {
